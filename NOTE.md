@@ -16,6 +16,14 @@ sequelize db:migrate
 2. Start looking for any migration files which haven't run yet. This is possible by checking SequelizeMeta table. In this case it will run XXXXXXXXXXXXXX-create-user.js migration, which we created in last step.
 3. Creates a table called Users with all columns as specified in its migration file
 
+`sequelize db:migrate:undo`
+Undoing Migrations (revert most recent migration)
+
+`sequelize db:migrate:undo:all`
+undoing all migrations
+
 数据库操作
+```bash
 SELECT * FROM chat.users;
 describe chat.users
+```
