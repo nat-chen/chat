@@ -56,7 +56,7 @@ module.exports = {
         const correctPassword = bcrypt.compare(password, hashedPassword); // hashed password not original
         if (!correctPassword) {
           errors.password = 'password is incorrect';
-          throw new AuthenticationError('password is incorrect', { errors });
+          throw new UserInputError('password is incorrect', { errors });
         }
 
         const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: 60 * 60 });
@@ -108,11 +108,16 @@ module.exports = {
 
         return user; // default call user.toJSON() automatically when return.
       } catch (err) {
-        console.log(err);
         if (err.name === 'SequelizeUniqueConstraintError') {
-          err.errors.forEach(e => errors[e.path] = `${e.path} is already taken`);
+          err.errors.forEach(e => {
+            const path = e.path.split('.')[1];
+            errors[path] = `${path} is already taken`;
+          });
         } else if (err.name === 'SequelizeValidationError') {
-          err.errors.forEach(e => errors[e.path] = e.message);
+          err.errors.forEach(e => {
+            const path = e.path.split('.')[1];
+            errors[path] = e.message;
+          });
         }
         throw new UserInputError('Bad input', { errors });
       }
