@@ -1,19 +1,13 @@
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
-  
     {
-      "type": "pwa-node",
+      "type": "node-terminal",
+      "name": "npm run dev",
       "request": "launch",
-      "name": "Launch Program",
-      "url": "http://localhost:4001",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "program": "${workspaceFolder}/server.js"
-    }
+      "command": "npm run dev",
+      "port": 4001,
+      "cwd": "${workspaceFolder}"
+    },
   ]
 }
