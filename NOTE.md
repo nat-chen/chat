@@ -11,13 +11,13 @@ docker run -v "$PWD/data":/var/lib/mysql -p 3306:3306 --name mysql-chat -e MYSQL
 生成 User 初始化文件，自动生成 model 和 migration
 (需手动修改自动生成的 model 和 migration 文件)
 
-## STEP2. sequelize db:migrate
+## STEP2. sequelize db:migrate (生成数据库)
 **Running Migration**
 1. Will ensure a table called SequelizeMeta in database. This table is used to record which migrations have run on the current database
 2. Start looking for any migration files which haven't run yet. This is possible by checking SequelizeMeta table. In this case it will run XXXXXXXXXXXXXX-create-user.js migration, which we created in last step.
 3. Creates a table called Users with all columns as specified in its migration file
 
-`sequelize db:migrate:undo`
+`sequelize db:migrate:undo` （删除数据库）
 Undoing Migrations (revert most recent migration)
 
 `sequelize db:migrate:undo:all`
@@ -37,6 +37,6 @@ sudo lsof -i :3000
 kill -9 <PID>
 ```
 
-## STEP3 sequelize seed:generate --name create-users
+## STEP3 sequelize seed:generate --name create-users （seed 数据填充到数据库）
 Seed files are some change in data that can be used to populate database table with sample data or test data.
 

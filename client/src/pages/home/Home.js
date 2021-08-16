@@ -1,5 +1,5 @@
 import { Fragment } from 'react'
-import { Row, Button, Col } from 'react-bootstrap';
+import { Row, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import { useAuthDispatch } from '../../context/auth';
@@ -12,27 +12,22 @@ export default function Home({ history }) {
 
   const logout = () => {
     dispatch({ type: 'LOGOUT' });
-    history.push('/login');
+    // history.push('/login'); cache token from localstorage if use this way
+    window.location.href = '/login';
   };
 
   return(
     <Fragment>
       <Row className="bg-white justify-content-around mb-1">
-        <Col>
-          <Link to="/login">
-            <Button variant="link">Login</Button>
-          </Link>
-        </Col>
-        <Col>
-          <Link to="/register">
-            <Button variant="link">Register</Button>
-          </Link>
-        </Col>
-        <Col>
-          <Button variant="link" onClick={logout}>
-            Logout
-          </Button>
-        </Col>
+        <Link to="/login">
+          <Button variant="link">Login</Button>
+        </Link>
+        <Link to="/register">
+          <Button variant="link">Register</Button>
+        </Link>
+        <Button variant="link" onClick={logout}>
+          Logout
+        </Button>
       </Row>
       <Row className="bg-white">
         <Users />
