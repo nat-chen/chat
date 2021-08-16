@@ -49,7 +49,7 @@ export default function Register(props) {
     <div>
       <Row className="bg-white py-5 justify-content-center">
         <Col sm={8} md={6} lg={4}>
-          <h1>Register</h1>
+          <h1>Login</h1>
           <Form onSubmit={submitLoginForm}>
             <Form.Group>
               <Form.Label className={errors.username && "text-danger"}>
