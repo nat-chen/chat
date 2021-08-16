@@ -36,3 +36,7 @@ sudo lsof -i :3000
 # kill
 kill -9 <PID>
 ```
+
+## STEP3 sequelize seed:generate --name create-users
+Seed files are some change in data that can be used to populate database table with sample data or test data.
+
