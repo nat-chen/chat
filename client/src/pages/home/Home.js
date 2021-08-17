@@ -1,17 +1,54 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import { Row, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { gql, useSubscription } from '@apollo/client';
 
-import { useAuthDispatch } from '../../context/auth';
+import { useAuthDispatch, useAuthState } from '../../context/auth';
+import { useMessageDispatch } from '../../context/message';
 
 import Users from './Users';
 import Messages from './Messages';
 
+const NEW_MESSAGE = gql`
+  subscription newMessage {
+    uuid
+    from
+    to
+    content
+    createdAt
+  }
+`;
+
 export default function Home({ history }) {
-  const dispatch = useAuthDispatch();
+  const authDispatch = useAuthDispatch();
+  const messageDispatch = useMessageDispatch();
+
+  const { user } = useAuthState();
+
+  const { data: messageData, error: messageError } = useSubscription(NEW_MESSAGE);
+
+  useEffect(() => {
+    if (messageError) {
+      console.log(messageError);
+      return;
+    }
+
+    if (messageData) {
+      const message = messageData.newMessage;
+      const otherUser = user.username === message.to ? message.from : message.to;
+      console.log(otherUser);
+      messageDispatch({
+        type: 'ADD_MESSAGE',
+        payload: {
+          username: otherUser,
+          message,
+        },
+      });
+    }
+  }, [messageError, messageData]);
 
   const logout = () => {
-    dispatch({ type: 'LOGOUT' });
+    authDispatch({ type: 'LOGOUT' });
     // history.push('/login'); cache token from localstorage if use this way
     window.location.href = '/login';
   };

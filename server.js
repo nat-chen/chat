@@ -10,6 +10,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: contextMiddleware,
+  subscriptions: { path: '/graphql' },
 });
 
 server.listen().then(({ url }) => {
